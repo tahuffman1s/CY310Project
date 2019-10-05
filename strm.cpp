@@ -80,6 +80,8 @@ std::string strm::backcut(std::string input, int index) {
 }
 
 // Flags stores flags into a vector and returns the vector.
+// Works via recursion.
+// Supports a theoretically infinite number of Flags.
 
 void strm::flags(std::string input, std::vector<std::string>&ret) {
         strm in;
@@ -96,6 +98,8 @@ void strm::flags(std::string input, std::vector<std::string>&ret) {
         }
 
 }
+
+// Counts the number of spaces in a string.
 
 int strm::spcnt(std::string input) {
         int ret = 0, count = 0;
