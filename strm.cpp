@@ -87,7 +87,7 @@ void strm::flags(std::string input, std::vector<std::string>&ret) {
         strm in;
         std::string flag;
         input = in.backcut(input,in.gfsin(input) + 1);
-        if(in.cifs(input) == false || input == " ") {
+        if(in.cifs(input) == false) {
                 flag = input;
                 ret.push_back(flag);
         }
