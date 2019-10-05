@@ -5,7 +5,7 @@
 
 class strm {
 private:
-std::vector<std::string> retvector;
+
 public:
 std::string dinput(std::string);
 bool cifs(std::string);
