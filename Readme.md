@@ -9,7 +9,7 @@ This program runs upon user connection via SSH to a server. <br />
 This application is meant to manage an FTP server <br />
 
 <h2>Features:</h2>
-* RSA encryption (in the future :-) )<br />
+* RSA encryption <br />
 * User authentication <br />
 * Multiple Users <br />
 * Multiple Arguments Scheme <br />
