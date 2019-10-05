@@ -8,10 +8,12 @@ void ctrl_cz_block(int signum) {                                                
 }
 
 int main() {
+        strm strtest;
         std::string i = "";
         strm input;
         signal(SIGINT, &ctrl_cz_block);
         signal(SIGTSTP, &ctrl_cz_block);
+        signal(SIGQUIT, &ctrl_cz_block);
         for(;;) {
                 i = input.dinput(i);
         }

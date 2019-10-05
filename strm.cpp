@@ -54,7 +54,7 @@ std::string strm::frontcut(std::string input, int index) {
         std::string return_string = "";
         int i = 0;
         if(index < input.length() && index > 0) {
-                while(i != index) {
+                while(i <= index) {
                         return_string = return_string + input[i];
                         i++;
                 }
@@ -68,11 +68,11 @@ std::string strm::frontcut(std::string input, int index) {
 
 std::string strm::backcut(std::string input, int index) {
         std::string return_string = "";
-        int i = input.length();
+        int i = index;
         if(index < input.length() && index > 0) {
-                while(i != index) {
+                while(i < input.length()) {
                         return_string = return_string + input[i];
-                        i--;
+                        i++;
                 }
         }
 
