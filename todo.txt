@@ -4,8 +4,8 @@ Key:
 ! = not started
 
 1. String Manipulation Class #
-  a. front cut function !
-  b. back cut function !
+  a. front cut function *
+  b. back cut function *
   c. Check if space *
   d. Standard input function *
   e. Get first space index value *
