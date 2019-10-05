@@ -1,0 +1,35 @@
+Key:
+# = partially done
+* = done
+! = not started
+
+1. String Manipulation Class #
+  a. front cut function !
+  b. back cut function !
+  c. Check if space *
+  d. Standard input function *
+  e. Get first space index value *
+
+2. Main Function #
+  a. Signal block ctrl-c and ctrl-z *
+  b. Declare strm type *
+  c. infinite loop *
+  d. Calls dinput *
+
+3. User authentication Class !
+  a. login !
+  b. logout !
+  c. Register !
+  d. Promote !
+  e. Demote !
+  f. Save !
+  g. Load !
+
+4. RSA Password encryption Class !
+  a. Encrypt !
+  b. Decrypt !
+  c. Generate key !
+  
+5. FTP management class !
+  a. Lock FTP Server !
+  b. Unlock FTP Server !
