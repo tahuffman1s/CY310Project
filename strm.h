@@ -5,13 +5,13 @@
 
 class strm {
 private:
-std::string input;
+std::vector<std::string> retvector;
 public:
 std::string dinput(std::string);
 bool cifs(std::string);
 int gfsin(std::string);
 std::string frontcut(std::string, int);
 std::string backcut(std::string, int);
-std::vector<std::string> flags(std::string);
+void flags(std::string, std::vector<std::string>&ret);
 int spcnt(std::string);
 };

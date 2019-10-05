@@ -9,14 +9,7 @@ void ctrl_cz_block(int signum) {                                                
 }
 
 int main() {
-        strm strtest;
-        std::string i = "", flagt = "Test Test Test Test";
-        std::vector<std::string> flagg = strtest.flags(flagt);
-        std::vector<std::string>::iterator ptr;
-        for(ptr = flagg.begin(); ptr < flagg.end(); ptr++) {
-                std::cout << *ptr << std::endl;
-        }
-
+        std::string i = "";
         strm input;
         signal(SIGINT, &ctrl_cz_block);
         signal(SIGTSTP, &ctrl_cz_block);
