@@ -78,3 +78,47 @@ std::string strm::backcut(std::string input, int index) {
 
         return return_string;
 }
+
+// Flags stores flags into a vector and returns the vector.
+
+std::vector<std::string> strm::flags(std::string input) {
+        std::string temp = input;
+        std::string flag;
+        std::vector<std::string> retvector;
+        strm in;
+        int i = in.gfsin(input) + 1, count = in.gfsin(input) + 1, count2, spc, count3 = 0;
+        i = in.gfsin(temp) + 1;
+        temp = in.backcut(temp, i);
+        std::cout << "firstbackcut: " << temp << std::endl;
+        while (count != input.length()) {
+                flag = "";
+                count2 = in.gfsin(in.frontcut(temp, i - 2));
+                if(count3 == spc) {
+                        retvector.push_back(in.frontcut(temp,i - 2));
+                }
+                else {
+                        spc = in.spcnt(temp);
+                        while(count2 < i - 1) {
+                                flag = flag + temp[count2];
+                                count2++;
+                        }
+                        std::cout << "flag: " << flag << std::endl;
+                        retvector.push_back(flag);
+                        temp = in.backcut(temp, i);
+                        std::cout << "Second bcut: " << temp << std::endl;
+                        count = count + flag.length() + spc;
+                }
+        }
+        return retvector;
+}
+
+int strm::spcnt(std::string input) {
+        int ret = 0, count = 0;
+        while(count != input.length()) {
+                if(input[count] == ' ') {
+                        count++;
+                }
+                ret++;
+        }
+        return ret;
+}
