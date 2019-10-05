@@ -8,7 +8,7 @@
 
 std::string strm::dinput(std::string input) {
         std::cout << "> ";
-        std::getline(input,std::cin);
+        getline(input,std::cin);
 
         return input;
 }
