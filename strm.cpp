@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <limits>
+#include <string>
 #include "strm.h"
 
 // Default Input function
