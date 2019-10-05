@@ -8,7 +8,7 @@
 
 std::string strm::dinput(std::string input) {
         std::cout << "> ";
-        std::cin >> input;
+        std::getline(input,cin);
 
         return input;
 }
@@ -50,5 +50,6 @@ int strm::gfsin(std::string input) {
 // frontcut starts at the beginning
 
 std::string strm::frontcut(std::string input, int index) {
+        std::string return_string;
 
 }
