@@ -9,7 +9,7 @@
 
 std::string strm::dinput(std::string input) {
         std::cout << "> ";
-        getline(input,std::cin);
+        std::getline(input,std::cin);
 
         return input;
 }
