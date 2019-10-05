@@ -11,3 +11,5 @@ This application is meant to manage an FTP server <br />
 <h2>Features:</h2>
 * RSA encryption (in the future :-) )<br />
 * User authentication <br />
+* Multiple Users <br />
+* Multiple Arguments Scheme <br />
