@@ -3,7 +3,7 @@ Key:
 * = done
 ! = not started
 
-1. String Manipulation Class #
+1. String Manipulation Class *
   a. front cut function *
   b. back cut function *
   c. Check if space *
