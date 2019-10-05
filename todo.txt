@@ -9,6 +9,7 @@ Key:
   c. Check if space *
   d. Standard input function *
   e. Get first space index value *
+  f. Flags function *
 
 2. Main Function #
   a. Signal block ctrl-c and ctrl-z *
