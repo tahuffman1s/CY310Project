@@ -29,7 +29,7 @@ Key:
   a. Encrypt !
   b. Decrypt !
   c. Generate key !
-  
+
 5. FTP management class !
   a. Lock FTP Server !
   b. Unlock FTP Server !
