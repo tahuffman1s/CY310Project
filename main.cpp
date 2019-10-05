@@ -4,7 +4,7 @@
 #include "strm.h"                                                               // Custom string manipulation class
 
 void ctrl_cz_block(int signum) {                                                // This function is called whenever CTRL-C or CTRL-Z is pressed.
-        std::cout << " ";
+
 }
 
 int main() {

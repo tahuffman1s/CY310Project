@@ -51,6 +51,11 @@ int strm::gfsin(std::string input) {
 // frontcut starts at the beginning
 
 std::string strm::frontcut(std::string input, int index) {
-        std::string return_string;
-
+        std::string return_string = "";
+        int i = 0;
+        while(i != index) {
+                return_string = return_string + input[i];
+                i++;
+        }
+        return return_string;
 }
