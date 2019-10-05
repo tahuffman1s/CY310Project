@@ -53,9 +53,28 @@ int strm::gfsin(std::string input) {
 std::string strm::frontcut(std::string input, int index) {
         std::string return_string = "";
         int i = 0;
-        while(i != index) {
-                return_string = return_string + input[i];
-                i++;
+        if(index < input.length() && index > 0) {
+                while(i != index) {
+                        return_string = return_string + input[i];
+                        i++;
+                }
         }
+
+        return return_string;
+}
+
+// Backcut cuts the string at the index point
+// Backcut starts from the end of a string.
+
+std::string strm::backcut(std::string input, int index) {
+        std::string return_string = "";
+        int i = input.length();
+        if(index < input.length() && index > 0) {
+                while(i != index) {
+                        return_string = return_string + input[i];
+                        i--;
+                }
+        }
+
         return return_string;
 }
