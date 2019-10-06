@@ -1,12 +1,14 @@
-#include <iostream>                                                             // Standard
+#include <iostream>
 #include <cstddef>
 #include <vector>
-#include <signal.h>                                                             // Used to read signals i.e. ctrl c and ctrl z
-#include <cryptoopp
+#include <signal.h>
 #include "strm.h"
-#include "aes.h"                                                               // Custom string manipulation class
+#include <cryptopp/aes.h>
+#include <cryptopp/osrng.h>
 
-void ctrl_cz_block(int signum) {                                                // This function is called whenever CTRL-C or CTRL-Z is pressed.
+
+
+void ctrl_cz_block(int signum) {
 
 }
 
@@ -16,6 +18,14 @@ int main() {
         signal(SIGINT, &ctrl_cz_block);
         signal(SIGTSTP, &ctrl_cz_block);
         signal(SIGQUIT, &ctrl_cz_block);
+        std::cout << "Key length: " << CryptoPP::AES::DEFAULT_KEYLENGTH << std::endl;
+        CryptoPP::AutoSeededRandomPool rnd;
+        CryptoPP::SecByteBlock key(0x00, CryptoPP::AES::DEFAULT_KEYLENGTH);
+        rnd.GenerateBlock( key, key.size() );
+
+        CryptoPP::SecByteBlock iv(CryptoPP::AES::BLOCKSIZE);
+        rnd.GenerateBlock(iv, iv.size());
+
         for(;;) {
                 i = input.dinput(i);
         }
