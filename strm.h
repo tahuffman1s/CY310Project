@@ -7,7 +7,7 @@ class strm {
 private:
 
 public:
-std::string dinput(std::string);
+std::string dinput(std::string, int);
 bool cifs(std::string);
 int gfsin(std::string);
 std::string frontcut(std::string, int);

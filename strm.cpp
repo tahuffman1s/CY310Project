@@ -7,7 +7,7 @@
 
 // Default Input function
 
-std::string strm::dinput(std::string input) {
+std::string strm::dinput(std::string input, int priv) {
         std::cout << "> ";
         std::getline(std::cin,input);
 
@@ -88,8 +88,7 @@ void strm::flags(std::string input, std::vector<std::string>&ret) {
         std::string flag;
         input = in.backcut(input,in.gfsin(input) + 1);
         if(in.cifs(input) == false) {
-                flag = input;
-                ret.push_back(flag);
+                ret.push_back(input);
         }
         else {
                 flag = in.frontcut(input,in.gfsin(input) - 1);
@@ -98,6 +97,7 @@ void strm::flags(std::string input, std::vector<std::string>&ret) {
         }
 
 }
+
 
 // Counts the number of spaces in a string.
 
