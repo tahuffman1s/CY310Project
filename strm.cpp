@@ -7,10 +7,9 @@
 
 // Default Input function
 
-std::string strm::dinput(std::string input, int priv) {
+std::string strm::dinput(std::string input, int &priv) {
         std::cout << "> ";
         std::getline(std::cin,input);
-
         return input;
 }
 

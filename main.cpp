@@ -2,8 +2,9 @@
 #include <cstddef>
 #include <vector>
 #include <signal.h>
+#include <cctype>
 #include "strm.h"
-#include "cmds.h"
+#include "auth.h"
 #include <cryptopp/aes.h>
 #include <cryptopp/osrng.h>
 
@@ -14,11 +15,11 @@ void ctrl_cz_block(int signum) {
 }
 
 int main() {
-        std::string i = "";
+        std::string i = "", checker;
         int priv = 0;
         strm input;
-        std::vector<std::string> cmdvec;
-        cmds reg;
+        std::vector<std::string> cmdvec, empty;
+        auth reg;
         signal(SIGINT, &ctrl_cz_block);
         signal(SIGTSTP, &ctrl_cz_block);
         signal(SIGQUIT, &ctrl_cz_block);
@@ -33,12 +34,15 @@ int main() {
 
         for(;;) {
                 if(priv == 0) {
+                        cmdvec = empty;
                         std::cout << '\n';
                         std::cout << "Type login [Username] [Password] to login\n";
                         std::cout << "Type register [Username] [Password] to register\n";
                         std::cout << "> ";
                         std::getline(std::cin, i);
-                        if(tolower(input.frontcut(i,input.gfsin(i) - 1)) == "login" ) {
+                        checker = input.frontcut(i,input.gfsin(i) - 1);
+                        std::transform(checker.begin(),checker.end(),checker.begin(), ::tolower);
+                        if(checker == "login" ) {
                                 input.flags(i,cmdvec);
                                 if(cmdvec[0] != "" || cmdvec[1] != "") {
                                         reg.login(cmdvec,priv);
@@ -47,7 +51,7 @@ int main() {
                                         std::cout << "Must enter a username and password.\n";
                                 }
                         }
-                        else if(tolower(input.frontcut(i,input.gfsin(i) - 1)) == "register") {
+                        else if(checker == "register") {
                                 input.flags(i,cmdvec);
                                 if(cmdvec[0] != "" || cmdvec[1] != "") {
                                         reg.reg(cmdvec,priv);
