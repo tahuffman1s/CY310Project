@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <queue>
 #include "auth.h"
 #include "strm.h"
 
@@ -31,7 +32,7 @@ bool auth::check(std::string in) {
 
 // This command logins a user in. It relies on an integer to hold priveldge, so that there are multiple levels of authentication.
 
-void auth::login(std::vector<std::string> vec, int &priv) {
+void auth::login(std::vector<std::string> vec, int &priv, std::string &user, std::priority_queue<std::string> &cmdqueue) {
         std::ifstream fin;
         std::string line;
         std::vector<std::string> temp, empty;
@@ -53,6 +54,8 @@ void auth::login(std::vector<std::string> vec, int &priv) {
                                 in.flags(line, temp);
                                 if(temp[0] == vec[0]) {
                                         if(temp[1] == vec[1]) {
+                                                user = temp[0];
+                                                std::system("clear");
                                                 std::cout << "Logged in!\n";
                                                 if(temp[2] == "user") {
                                                         std::cout << "Welcome " << temp[0] << " you are a user.\n";
@@ -60,6 +63,7 @@ void auth::login(std::vector<std::string> vec, int &priv) {
                                                         break;
                                                 }
                                                 else if(temp[2] == "mod") {
+
                                                         std::cout << "Welcome " << temp[0] << " you are a mod.\n";
                                                         priv = 2;
                                                         break;

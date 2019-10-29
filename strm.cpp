@@ -3,13 +3,24 @@
 #include <iostream>
 #include <limits>
 #include <string>
+#include <queue>
+#include <fstream>
+#include <ctime>
 #include "strm.h"
 
 // Default Input function
 
-std::string strm::dinput(std::string input, int &priv) {
+std::string strm::dinput(std::string input, int &priv, std::string &user, std::priority_queue<std::string> &cmdqueue) {
         std::cout << "> ";
+        strm log;
         std::getline(std::cin,input);
+        time_t now = time(0);
+        char* dt = ctime(&now);
+        cmdqueue.push(user + " " + input + " " + dt);
+        log.wlog(cmdqueue);
+        while(!cmdqueue.empty()) {
+                cmdqueue.pop();
+        }
         return input;
 }
 
@@ -109,4 +120,30 @@ int strm::spcnt(std::string input) {
                 count++;
         }
         return ret;
+}
+
+void strm::wlog(std::priority_queue<std::string> &cmdqueue){
+        std::fstream fout;
+        std::string line;
+        std::priority_queue<std::string> combo, combotemp = cmdqueue, stor, temp = cmdqueue;
+        fout.open("log.txt", std::fstream::in);
+        while(getline(fout,line)) {
+                stor.push(line);
+        }
+        while(!combotemp.empty()) {
+                combo.push(combotemp.top());
+                combotemp.pop();
+        }
+        while(!stor.empty()) {
+                combo.push(stor.top());
+                stor.pop();
+        }
+        cmdqueue = combo;
+        temp = cmdqueue;
+        fout.close();
+        fout.open("log.txt", std::fstream::out);
+        while(!temp.empty()) {
+                fout << temp.top() << '\n';
+                temp.pop();
+        }
 }

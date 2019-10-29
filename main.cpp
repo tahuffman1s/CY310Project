@@ -5,6 +5,7 @@
 #include <cctype>
 #include "strm.h"
 #include "auth.h"
+#include <queue>
 #include <cryptopp/aes.h>
 #include <cryptopp/osrng.h>
 
@@ -15,10 +16,12 @@ void ctrl_cz_block(int signum) {
 }
 
 int main() {
-        std::string i = "", checker;
+        std::string i = "", checker, user = "";
         int priv = 0;
+        bool first = true, loaded = false;
         strm input;
         std::vector<std::string> cmdvec, empty;
+        std::priority_queue<std::string> cmdqueue;
         auth reg;
         signal(SIGINT, &ctrl_cz_block);
         signal(SIGTSTP, &ctrl_cz_block);
@@ -45,7 +48,7 @@ int main() {
                         if(checker == "login" ) {
                                 input.flags(i,cmdvec);
                                 if(cmdvec[0] != "" || cmdvec[1] != "") {
-                                        reg.login(cmdvec,priv);
+                                        reg.login(cmdvec,priv, user, cmdqueue);
                                 }
                                 else {
                                         std::cout << "Must enter a username and password.\n";
@@ -54,17 +57,22 @@ int main() {
                         else if(checker == "register") {
                                 input.flags(i,cmdvec);
                                 if(cmdvec[0] != "" || cmdvec[1] != "") {
-                                        reg.reg(cmdvec,priv);
-                                        reg.login(cmdvec,priv);
+                                        reg.reg(cmdvec, priv);
+                                        reg.login(cmdvec, priv, user, cmdqueue);
                                 }
                                 else {
                                         std::cout << "Must enter a username and password.\n";
                                 }
 
                         }
+
                 }
                 else {
-                        input.dinput(i, priv);
+                        if(first == true) {
+                                std::cout << "Use help for a list of commands!" << std::endl;
+                        }
+                        first = false;
+                        input.dinput(i, priv, user, cmdqueue);
                 }
         }
 }
