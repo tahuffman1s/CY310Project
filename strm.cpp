@@ -17,7 +17,7 @@ std::string strm::dinput(std::string input, int &priv, std::string &user, std::p
         time_t now = time(0);
         char* dt = ctime(&now);
         cmdqueue.push(user + " " + input + " " + dt);
-        log.wlog(cmdqueue);
+        log.wlog(cmdqueue, user);
         while(!cmdqueue.empty()) {
                 cmdqueue.pop();
         }
@@ -122,11 +122,11 @@ int strm::spcnt(std::string input) {
         return ret;
 }
 
-void strm::wlog(std::priority_queue<std::string> &cmdqueue){
+void strm::wlog(std::priority_queue<std::string> &cmdqueue, std::string user){
         std::fstream fout;
         std::string line;
         std::priority_queue<std::string> combo, combotemp = cmdqueue, stor, temp = cmdqueue;
-        fout.open("log.txt", std::fstream::in);
+        fout.open("log/user/" + user + ".txt", std::fstream::in);
         while(getline(fout,line)) {
                 stor.push(line);
         }
@@ -141,7 +141,7 @@ void strm::wlog(std::priority_queue<std::string> &cmdqueue){
         cmdqueue = combo;
         temp = cmdqueue;
         fout.close();
-        fout.open("log.txt", std::fstream::out);
+        fout.open("log/user/" + user + ".txt", std::fstream::out);
         while(!temp.empty()) {
                 fout << temp.top() << '\n';
                 temp.pop();

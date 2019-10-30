@@ -15,6 +15,6 @@ int gfsin(std::string);
 std::string frontcut(std::string, int);
 std::string backcut(std::string, int);
 void flags(std::string, std::vector<std::string>&ret);
-void wlog(std::priority_queue<std::string> &cmdqueue);
+void wlog(std::priority_queue<std::string> &cmdqueue, std::string user);
 int spcnt(std::string);
 };

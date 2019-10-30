@@ -38,6 +38,7 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user, std
         std::vector<std::string> temp, empty;
         strm in;
         auth test;
+        std::fstream create;
         fin.open("cden.txt");
         if(fin.fail()) {
                 std::cout << "No cden.txt\n";
@@ -53,23 +54,26 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user, std
                                 line = "log " + line;
                                 in.flags(line, temp);
                                 if(temp[0] == vec[0]) {
+                                        user = temp[0];
+
                                         if(temp[1] == vec[1]) {
-                                                user = temp[0];
                                                 std::system("clear");
                                                 std::cout << "Logged in!\n";
                                                 if(temp[2] == "user") {
                                                         std::cout << "Welcome " << temp[0] << " you are a user.\n";
+                                                        create.open(user + ".txt", std::fstream::out);
                                                         priv = 1;
                                                         break;
                                                 }
                                                 else if(temp[2] == "mod") {
-
                                                         std::cout << "Welcome " << temp[0] << " you are a mod.\n";
+                                                        create.open(user + ".txt", std::fstream::out);
                                                         priv = 2;
                                                         break;
                                                 }
                                                 else if(temp[2] == "admin") {
                                                         std::cout << "Welcome " << temp[0] << " you are an admin.\n";
+                                                        create.open(user + ".txt", std::fstream::out);
                                                         priv = 3;
                                                         break;
                                                 }
@@ -81,9 +85,11 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user, std
                                         }
                                 }
                         }
+
                 }
         }
 }
+
 
 // Will be written later
 void auth::reg(std::vector<std::string> vec, int &priv) {
