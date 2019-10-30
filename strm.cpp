@@ -3,7 +3,7 @@
 #include <iostream>
 #include <limits>
 #include <string>
-#include <stack>
+#include <queue>
 #include <fstream>
 #include <ctime>
 #include "strm.h"
@@ -122,8 +122,8 @@ int strm::spcnt(std::string input) {
 void strm::wlog(std::string commands, std::string user){
         std::fstream fout;
         std::string line;
-        std::stack<std::string> stor;
-        std::string loc = "./log/users/" + user + ".txt";
+        std::priority_queue<std::string> stor;
+        std::string loc = "./users/" + user + "/" + "log.txt";
         fout.open(loc, std::fstream::in);
         while(getline(fout,line)) {
                 stor.push(line);

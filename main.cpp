@@ -8,6 +8,7 @@
 #include <queue>
 #include <cryptopp/aes.h>
 #include <cryptopp/osrng.h>
+#include "encrypt.h"
 
 
 
@@ -47,6 +48,7 @@ int main() {
                         if(checker == "login" ) {
                                 input.flags(i,cmdvec);
                                 if(cmdvec[0] != "" || cmdvec[1] != "") {
+                                        user = cmdvec[0];
                                         reg.login(cmdvec,priv, user);
                                 }
                                 else {

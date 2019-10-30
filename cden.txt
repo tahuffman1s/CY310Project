@@ -1,2 +1,0 @@
-travis pass2314 admin
-sam pass1234 user
