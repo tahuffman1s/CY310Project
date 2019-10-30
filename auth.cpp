@@ -32,7 +32,7 @@ bool auth::check(std::string in) {
 
 // This command logins a user in. It relies on an integer to hold priveldge, so that there are multiple levels of authentication.
 
-void auth::login(std::vector<std::string> vec, int &priv, std::string &user, std::priority_queue<std::string> &cmdqueue) {
+void auth::login(std::vector<std::string> vec, int &priv, std::string &user) {
         std::ifstream fin;
         std::string line;
         std::vector<std::string> temp, empty;

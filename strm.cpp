@@ -3,24 +3,21 @@
 #include <iostream>
 #include <limits>
 #include <string>
-#include <queue>
+#include <stack>
 #include <fstream>
 #include <ctime>
 #include "strm.h"
 
 // Default Input function
 
-std::string strm::dinput(std::string input, int &priv, std::string &user, std::priority_queue<std::string> &cmdqueue) {
+std::string strm::dinput(std::string input, int &priv, std::string &user) {
         std::cout << "> ";
         strm log;
         std::getline(std::cin,input);
         time_t now = time(0);
         char* dt = ctime(&now);
-        cmdqueue.push(input + " " + dt);
-        log.wlog(cmdqueue, user);
-        while(!cmdqueue.empty()) {
-                cmdqueue.pop();
-        }
+        std::string out = input + " " + dt;
+        log.wlog(out, user);
         return input;
 }
 
@@ -122,30 +119,21 @@ int strm::spcnt(std::string input) {
         return ret;
 }
 
-void strm::wlog(std::priority_queue<std::string> &cmdqueue, std::string user){
+void strm::wlog(std::string commands, std::string user){
         std::fstream fout;
         std::string line;
-        std::priority_queue<std::string> combo, combotemp = cmdqueue, stor, temp = cmdqueue;
+        std::stack<std::string> stor;
         std::string loc = "./log/users/" + user + ".txt";
         fout.open(loc, std::fstream::in);
         while(getline(fout,line)) {
                 stor.push(line);
         }
-        while(!combotemp.empty()) {
-                combo.push(combotemp.top());
-                combotemp.pop();
-        }
-        while(!stor.empty()) {
-                combo.push(stor.top());
-                stor.pop();
-        }
-        cmdqueue = combo;
-        temp = cmdqueue;
         fout.close();
         fout.open(loc, std::fstream::out);
-        while(!temp.empty()) {
-                fout << temp.top() << '\n';
-                temp.pop();
+        fout << commands << '\n';
+        while(!stor.empty()) {
+                fout << stor.top() << "\n";
+                stor.pop();
         }
         fout.close();
 }

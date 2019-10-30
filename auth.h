@@ -11,6 +11,6 @@ private:
 
 public:
 bool check(std::string);
-void login(std::vector<std::string>, int &priv, std::string &user, std::priority_queue<std::string> &cmdqueue);
+void login(std::vector<std::string>, int &priv, std::string &user);
 void reg(std::vector<std::string>, int &priv);
 };

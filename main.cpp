@@ -21,7 +21,6 @@ int main() {
         bool first = true, loaded = false;
         strm input;
         std::vector<std::string> cmdvec, empty;
-        std::priority_queue<std::string> cmdqueue;
         auth reg;
         signal(SIGINT, &ctrl_cz_block);
         signal(SIGTSTP, &ctrl_cz_block);
@@ -48,7 +47,7 @@ int main() {
                         if(checker == "login" ) {
                                 input.flags(i,cmdvec);
                                 if(cmdvec[0] != "" || cmdvec[1] != "") {
-                                        reg.login(cmdvec,priv, user, cmdqueue);
+                                        reg.login(cmdvec,priv, user);
                                 }
                                 else {
                                         std::cout << "Must enter a username and password.\n";
@@ -58,7 +57,7 @@ int main() {
                                 input.flags(i,cmdvec);
                                 if(cmdvec[0] != "" || cmdvec[1] != "") {
                                         reg.reg(cmdvec, priv);
-                                        reg.login(cmdvec, priv, user, cmdqueue);
+                                        reg.login(cmdvec, priv, user);
                                 }
                                 else {
                                         std::cout << "Must enter a username and password.\n";
@@ -72,7 +71,7 @@ int main() {
                                 std::cout << "Use help for a list of commands!" << std::endl;
                         }
                         first = false;
-                        input.dinput(i, priv, user, cmdqueue);
+                        input.dinput(i, priv, user);
                 }
         }
 }
