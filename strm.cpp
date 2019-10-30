@@ -147,4 +147,5 @@ void strm::wlog(std::priority_queue<std::string> &cmdqueue, std::string user){
                 fout << temp.top() << '\n';
                 temp.pop();
         }
+        fout.close();
 }

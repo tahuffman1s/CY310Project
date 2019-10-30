@@ -61,19 +61,16 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user, std
                                                 std::cout << "Logged in!\n";
                                                 if(temp[2] == "user") {
                                                         std::cout << "Welcome " << temp[0] << " you are a user.\n";
-                                                        create.open(user + ".txt", std::fstream::out);
                                                         priv = 1;
                                                         break;
                                                 }
                                                 else if(temp[2] == "mod") {
                                                         std::cout << "Welcome " << temp[0] << " you are a mod.\n";
-                                                        create.open(user + ".txt", std::fstream::out);
                                                         priv = 2;
                                                         break;
                                                 }
                                                 else if(temp[2] == "admin") {
                                                         std::cout << "Welcome " << temp[0] << " you are an admin.\n";
-                                                        create.open(user + ".txt", std::fstream::out);
                                                         priv = 3;
                                                         break;
                                                 }
