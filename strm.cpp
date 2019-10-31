@@ -3,7 +3,7 @@
 #include <iostream>
 #include <limits>
 #include <string>
-#include <queue>
+#include <stack>
 #include <fstream>
 #include <ctime>
 #include "strm.h"
@@ -105,7 +105,6 @@ void strm::flags(std::string input, std::vector<std::string>&ret) {
 
 }
 
-
 // Counts the number of spaces in a string.
 
 int strm::spcnt(std::string input) {
@@ -122,7 +121,7 @@ int strm::spcnt(std::string input) {
 void strm::wlog(std::string commands, std::string user){
         std::fstream fout;
         std::string line;
-        std::priority_queue<std::string> stor;
+        std::stack<std::string> stor;
         std::string loc = "./users/" + user + "/" + "log.txt";
         fout.open(loc, std::fstream::in);
         while(getline(fout,line)) {

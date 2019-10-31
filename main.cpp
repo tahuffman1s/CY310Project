@@ -9,6 +9,8 @@
 #include <cryptopp/aes.h>
 #include <cryptopp/osrng.h>
 #include "encrypt.h"
+#include "./MAIL/SMTPClient.h"
+
 
 
 
@@ -19,7 +21,8 @@ void ctrl_cz_block(int signum) {
 int main() {
         std::string i = "", checker, user = "";
         int priv = 0;
-        bool first = true, loaded = false;
+        bool first = true, email = false;
+        std::string em = "travis";
         strm input;
         std::vector<std::string> cmdvec, empty;
         auth reg;
@@ -40,8 +43,9 @@ int main() {
                         cmdvec = empty;
                         std::cout << '\n';
                         std::cout << "Type login [Username] [Password] to login\n";
-                        std::cout << "Type register [Username] [Password] to register\n";
+                        std::cout << "Type register [Username] [Password] [Email] to register\n";
                         std::cout << "> ";
+
                         std::getline(std::cin, i);
                         checker = input.frontcut(i,input.gfsin(i) - 1);
                         std::transform(checker.begin(),checker.end(),checker.begin(), ::tolower);
@@ -57,12 +61,29 @@ int main() {
                         }
                         else if(checker == "register") {
                                 input.flags(i,cmdvec);
-                                if(cmdvec[0] != "" || cmdvec[1] != "") {
-                                        reg.reg(cmdvec, priv);
-                                        reg.login(cmdvec, priv, user);
+                                if(cmdvec.size() != 3) {
+                                        std::cout << "Please provide an email!\n";
+                                }
+                                else if(cmdvec[0] != "" || cmdvec[0] != " " || cmdvec[1] != " " || cmdvec[1] != "" || cmdvec[2] != " " || cmdvec[2] != "") {
+                                        em = cmdvec[2];
+
+                                        for(int i = 0; i < em.length(); i++) {
+                                                if(em[i] == '@') {
+                                                        email = true;
+                                                }
+                                        }
+                                        if (email == true) {
+                                                user = cmdvec[0];
+                                                reg.reg(cmdvec, priv, user);
+                                                reg.login(cmdvec, priv, user);
+                                        }
+                                        else{
+                                                std::cout << "Not a valid email!\n";
+                                        }
+
                                 }
                                 else {
-                                        std::cout << "Must enter a username and password.\n";
+                                        std::cout << "Must enter a username, password, and email.\n";
                                 }
 
                         }

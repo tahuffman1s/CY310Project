@@ -76,6 +76,7 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user) {
                                 }
                                 else {
                                         std::cout << "Incorrect Password!\n";
+                                        en.encryptf("./users/"+ user + "/cred.txt");
                                         priv = 0;
                                         break;
                                 }
@@ -88,6 +89,22 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user) {
 
 
 // Will be written later
-void auth::reg(std::vector<std::string> vec, int &priv) {
+void auth::reg(std::vector<std::string> vec, int &priv, std::string &user) {
+
+        std::string password = vec[1], email = vec[2], folderlocation = "./users/" + user + '/', command = "mkdir " + folderlocation;
+        std::ifstream input;
+        std::fstream output;
+        input.open(folderlocation + "cred.txt");
+        encrypt en;
+        if(input.fail()) {
+                system(command.c_str());
+                output.open(folderlocation + "cred.txt", std::fstream::out);
+                output << user << " " << password << " user " << email;
+                output.close();
+                en.encryptf(folderlocation + "cred.txt");
+        }
+        else if (!input.fail()) {
+                std::cout <<  "User already exists!\n";
+        }
 
 }

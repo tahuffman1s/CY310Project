@@ -14,7 +14,7 @@ void encrypt::encryptf(std::string fname) {
         std::string line, cipherline;
         input.open(fname,std::fstream::in);
         if (input.fail()) {
-                std::cout << "No file named " << fname << " found!\n";
+
         }
         else{
 
@@ -46,7 +46,7 @@ void encrypt::decryptf(std::string fname) {
         std::string cipherline, line;
         input.open(fname,std::fstream::in);
         if (input.fail()) {
-                std::cout << "No file named " << fname << " found\n";
+
         }
         else{
                 CryptoPP::AES::Decryption aesDecryption(key, CryptoPP::AES::DEFAULT_KEYLENGTH);
