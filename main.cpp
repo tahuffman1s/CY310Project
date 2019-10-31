@@ -9,8 +9,6 @@
 #include <cryptopp/aes.h>
 #include <cryptopp/osrng.h>
 #include "encrypt.h"
-#include "./MAIL/SMTPClient.h"
-
 
 
 
@@ -42,21 +40,20 @@ int main() {
                 if(priv == 0) {
                         cmdvec = empty;
                         std::cout << '\n';
-                        std::cout << "Type login [Username] [Password] to login\n";
-                        std::cout << "Type register [Username] [Password] [Email] to register\n";
+                        std::cout << "Type login [Username] to login\n";
+                        std::cout << "Type register [Username] [Email] to register\n";
                         std::cout << "> ";
-
                         std::getline(std::cin, i);
                         checker = input.frontcut(i,input.gfsin(i) - 1);
                         std::transform(checker.begin(),checker.end(),checker.begin(), ::tolower);
                         if(checker == "login" ) {
                                 input.flags(i,cmdvec);
-                                if(cmdvec[0] != "" || cmdvec[1] != "") {
+                                if(cmdvec[0] != "") {
                                         user = cmdvec[0];
                                         reg.login(cmdvec,priv, user);
                                 }
                                 else {
-                                        std::cout << "Must enter a username and password.\n";
+                                        std::cout << "Must enter a username!\n";
                                 }
                         }
                         else if(checker == "register") {
@@ -64,8 +61,8 @@ int main() {
                                 if(cmdvec.size() != 3) {
                                         std::cout << "Please provide an email!\n";
                                 }
-                                else if(cmdvec[0] != "" || cmdvec[0] != " " || cmdvec[1] != " " || cmdvec[1] != "" || cmdvec[2] != " " || cmdvec[2] != "") {
-                                        em = cmdvec[2];
+                                else if(cmdvec[0] != "" || cmdvec[0] != " " || cmdvec[1] != " " || cmdvec[1] != "") {
+                                        em = cmdvec[1];
 
                                         for(int i = 0; i < em.length(); i++) {
                                                 if(em[i] == '@') {
@@ -83,7 +80,7 @@ int main() {
 
                                 }
                                 else {
-                                        std::cout << "Must enter a username, password, and email.\n";
+                                        std::cout << "Must enter a username, and email.\n";
                                 }
 
                         }

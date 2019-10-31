@@ -5,6 +5,23 @@
 #include "auth.h"
 #include "strm.h"
 #include "encrypt.h"
+#include <termios.h>
+#include <unistd.h>
+
+void HideStdinKeystrokes() {
+        termios tty;
+        tcgetattr(STDIN_FILENO, &tty);
+        tty.c_lflag &= ~ECHO;
+        tcsetattr(STDIN_FILENO, TCSANOW, &tty);
+}
+
+void ShowStdinKeystrokes()
+{
+        termios tty;
+        tcgetattr(STDIN_FILENO, &tty);
+        tty.c_lflag |= ECHO;
+        tcsetattr(STDIN_FILENO, TCSANOW, &tty);
+}
 
 // This Function returns whether or not a username exists
 bool auth::check(std::string in) {
@@ -35,50 +52,55 @@ bool auth::check(std::string in) {
 
 void auth::login(std::vector<std::string> vec, int &priv, std::string &user) {
         std::ifstream fin;
-        std::string line;
+        std::string line, password;
         std::vector<std::string> temp, empty;
         strm in;
         auth test;
         std::fstream create;
+        int fails = 0;
         encrypt en;
         en.decryptf("./users/"+ user + "/cred.txt");
         fin.open("./users/"+ user + "/cred.txt");
         if(fin.fail()) {
                 std::cout << "No user named " << user << std::endl;
         }
+
         else {
-                while(std::getline(fin,line)) {
-                        temp = empty;
-                        line = "log " + line;
-                        in.flags(line, temp);
-                        if(temp[0] == vec[0]) {
-                                if(temp[1] == vec[1]) {
+                std::getline(fin,line);
+                temp = empty;
+                line = "log " + line;
+                in.flags(line, temp);
+                while(fails < 3) {
+                        HideStdinKeystrokes();
+                        std::cout << "Please enter a password: ";
+                        std::cin >> password;
+                        std::cout << '\n';
+                        ShowStdinKeystrokes();
+
+                        if(temp[0] == user) {
+                                if(temp[1] == password) {
                                         std::system("clear");
                                         std::cout << "Logged in!\n";
                                         if(temp[2] == "user") {
                                                 std::cout << "Welcome " << temp[0] << " you are a user.\n";
                                                 en.encryptf("./users/"+ user + "/cred.txt");
                                                 priv = 1;
-                                                break;
                                         }
                                         else if(temp[2] == "mod") {
                                                 std::cout << "Welcome " << temp[0] << " you are a mod.\n";
                                                 en.encryptf("./users/"+ user + "/cred.txt");
                                                 priv = 2;
-                                                break;
                                         }
                                         else if(temp[2] == "admin") {
                                                 std::cout << "Welcome " << temp[0] << " you are an admin.\n";
                                                 en.encryptf("./users/"+ user + "/cred.txt");
                                                 priv = 3;
-                                                break;
                                         }
                                 }
                                 else {
-                                        std::cout << "Incorrect Password!\n";
+                                        fails++;
+                                        std::cout << "Incorrect Password! Number of attempts remaining: " << 3 - fails << '\n';
                                         en.encryptf("./users/"+ user + "/cred.txt");
-                                        priv = 0;
-                                        break;
                                 }
 
                         }
