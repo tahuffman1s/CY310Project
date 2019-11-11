@@ -37,7 +37,7 @@ bool strm::cifs(std::string input) {
 }
 
 // gfsin returns the index value of the first space
-// Used to cut strings int the right parts for processing
+// Used to cut strings into the right parts for processing
 
 int strm::gfsin(std::string input) {
         int i = 0;
