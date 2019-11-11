@@ -50,7 +50,7 @@ bool auth::check(std::string in) {
 
 // This command logins a user in. It relies on an integer to hold priveldge, so that there are multiple levels of authentication.
 
-void auth::login(std::vector<std::string> vec, int &priv, std::string &user) {
+void auth::login(std::vector<std::string> vec, int &priv, std::string &user, bool skip) {
         std::ifstream fin;
         std::string line, password;
         std::vector<std::string> temp, empty;
@@ -71,38 +71,66 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user) {
                 line = "log " + line;
                 in.flags(line, temp);
                 while(fails < 3) {
-                        HideStdinKeystrokes();
-                        std::cout << "Please enter a password: ";
-                        std::cin >> password;
-                        std::cout << '\n';
-                        ShowStdinKeystrokes();
-
                         if(temp[0] == user) {
-                                if(temp[1] == password) {
+                                if(skip == false) {
+                                        std::cout << "Please enter password: ";
+                                        HideStdinKeystrokes();
+                                        getline(std::cin, password);
+                                        ShowStdinKeystrokes();
+                                        std::cout << '\n';
+                                        if(temp[1] == password) {
+                                                std::system("clear");
+                                                std::cout << "Logged in!\n";
+                                                if(temp[2] == "user") {
+                                                        std::cout << "Welcome " << temp[0] << " you are a user.\n";
+                                                        en.encryptf("./users/"+ user + "/cred.txt");
+                                                        in.wlog(user + " Logged in on", user);
+                                                        priv = 1;
+                                                        break;
+                                                }
+                                                else if(temp[2] == "mod") {
+                                                        std::cout << "Welcome " << temp[0] << " you are a mod.\n";
+                                                        en.encryptf("./users/"+ user + "/cred.txt");
+                                                        in.wlog(user + " Logged in on", user);
+                                                        priv = 2;
+                                                        break;
+                                                }
+                                                else if(temp[2] == "admin") {
+                                                        std::cout << "Welcome " << temp[0] << " you are an admin.\n";
+                                                        en.encryptf("./users/"+ user + "/cred.txt");
+                                                        in.wlog(user + " Logged in on", user);
+                                                        priv = 3;
+                                                        break;
+                                                }
+                                        }
+                                        else {
+                                                fails++;
+                                                std::cout << "Incorrect Password! Number of attempts remaining: " << 3 - fails << '\n';
+                                                en.encryptf("./users/"+ user + "/cred.txt");
+                                        }
+                                }
+                                else{
                                         std::system("clear");
                                         std::cout << "Logged in!\n";
                                         if(temp[2] == "user") {
                                                 std::cout << "Welcome " << temp[0] << " you are a user.\n";
                                                 en.encryptf("./users/"+ user + "/cred.txt");
                                                 priv = 1;
+                                                break;
                                         }
                                         else if(temp[2] == "mod") {
                                                 std::cout << "Welcome " << temp[0] << " you are a mod.\n";
                                                 en.encryptf("./users/"+ user + "/cred.txt");
                                                 priv = 2;
+                                                break;
                                         }
                                         else if(temp[2] == "admin") {
                                                 std::cout << "Welcome " << temp[0] << " you are an admin.\n";
                                                 en.encryptf("./users/"+ user + "/cred.txt");
                                                 priv = 3;
+                                                break;
                                         }
                                 }
-                                else {
-                                        fails++;
-                                        std::cout << "Incorrect Password! Number of attempts remaining: " << 3 - fails << '\n';
-                                        en.encryptf("./users/"+ user + "/cred.txt");
-                                }
-
                         }
 
                 }
@@ -113,7 +141,12 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user) {
 // Will be written later
 void auth::reg(std::vector<std::string> vec, int &priv, std::string &user) {
 
-        std::string password = vec[1], email = vec[2], folderlocation = "./users/" + user + '/', command = "mkdir " + folderlocation;
+        std::string password, email = vec[1], folderlocation = "./users/" + user + '/', command = "mkdir " + folderlocation;
+        std::cout << "Please enter a password: ";
+        HideStdinKeystrokes();
+        getline(std::cin, password);
+        ShowStdinKeystrokes();
+        std::cout << '\n';
         std::ifstream input;
         std::fstream output;
         input.open(folderlocation + "cred.txt");

@@ -9,6 +9,7 @@
 #include <cryptopp/aes.h>
 #include <cryptopp/osrng.h>
 #include "encrypt.h"
+#include <ctime>
 
 
 
@@ -18,8 +19,10 @@ void ctrl_cz_block(int signum) {
 
 int main() {
         std::string i = "", checker, user = "";
+        std::string out, stime;
         int priv = 0;
         bool first = true, email = false;
+
         std::string em = "travis";
         strm input;
         std::vector<std::string> cmdvec, empty;
@@ -50,7 +53,7 @@ int main() {
                                 input.flags(i,cmdvec);
                                 if(cmdvec[0] != "") {
                                         user = cmdvec[0];
-                                        reg.login(cmdvec,priv, user);
+                                        reg.login(cmdvec,priv, user, false);
                                 }
                                 else {
                                         std::cout << "Must enter a username!\n";
@@ -58,7 +61,7 @@ int main() {
                         }
                         else if(checker == "register") {
                                 input.flags(i,cmdvec);
-                                if(cmdvec.size() != 3) {
+                                if(cmdvec.size() != 2) {
                                         std::cout << "Please provide an email!\n";
                                 }
                                 else if(cmdvec[0] != "" || cmdvec[0] != " " || cmdvec[1] != " " || cmdvec[1] != "") {
@@ -72,7 +75,7 @@ int main() {
                                         if (email == true) {
                                                 user = cmdvec[0];
                                                 reg.reg(cmdvec, priv, user);
-                                                reg.login(cmdvec, priv, user);
+                                                reg.login(cmdvec, priv, user, true);
                                         }
                                         else{
                                                 std::cout << "Not a valid email!\n";
@@ -91,7 +94,9 @@ int main() {
                                 std::cout << "Use help for a list of commands!" << std::endl;
                         }
                         first = false;
-                        input.dinput(i, priv, user);
+                        std::cout << "> ";
+                        std::getline(std::cin, i);
+                        input.wlog(i, user);
                 }
         }
 }

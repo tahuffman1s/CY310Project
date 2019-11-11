@@ -5,6 +5,7 @@
 #include <string>
 #include <stack>
 #include <fstream>
+#include <ios>
 #include <ctime>
 #include "strm.h"
 
@@ -119,20 +120,18 @@ int strm::spcnt(std::string input) {
 }
 
 void strm::wlog(std::string commands, std::string user){
-        std::fstream fout;
+        std::ofstream fout;
         std::string line;
-        std::stack<std::string> stor;
+        char* dt;
+        time_t now;
+        std::string out, stime;
         std::string loc = "./users/" + user + "/" + "log.txt";
-        fout.open(loc, std::fstream::in);
-        while(getline(fout,line)) {
-                stor.push(line);
-        }
-        fout.close();
-        fout.open(loc, std::fstream::out);
-        fout << commands << '\n';
-        while(!stor.empty()) {
-                fout << stor.top() << "\n";
-                stor.pop();
-        }
+        now = time(0);
+        dt  = ctime(&now);
+        stime = dt;
+        stime = stime.substr(0,stime.length()-1);
+        out = commands + " " + stime;
+        fout.open(loc, std::ios_base::app | std::ios_base::out);
+        fout << out << '\n';
         fout.close();
 }
