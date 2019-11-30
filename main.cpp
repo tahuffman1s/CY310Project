@@ -17,7 +17,7 @@ void ctrl_cz_block(int signum) {}
 int main() {
   system("clear");
   std::string i = "", checker, user = "";
-  std::string out, stime;
+  std::string out, stime, arg;
   int priv = 0;
   bool first = true, email = false;
   std::string fix;
@@ -41,7 +41,7 @@ int main() {
 
   for (;;) {
     if (priv == 0) {
-      cmdvec = empty;
+      cmdvec.clear();
       std::cout << '\n';
       std::cout << "Type login [Username] to login\n";
       std::cout << "Type register [Username] [Email] to register\n";
@@ -94,6 +94,7 @@ int main() {
       }
 
     } else {
+
       if (first == true) {
         std::cout << "Use help for a list of commands!" << std::endl;
       }
@@ -102,18 +103,21 @@ int main() {
       std::getline(std::cin, i);
       input.wlog(i, user);
       std::transform(i.begin(), i.end(), i.begin(), ::tolower);
+      cmdvec.clear();
       input.flags(i, cmdvec);
+      arg = cmdvec[0];
       if (input.cifs(i) == true) {
         i = input.frontcut(i, input.gfsin(i) - 1);
       }
       if (i == "help") {
-        command.help(cmdvec[0], priv);
+        command.help(arg, priv);
       }
       if (i == "clear") {
         system("clear");
       }
       if (i == "ftplock -l") {
       }
+      cmdvec.clear();
     }
   }
 }
