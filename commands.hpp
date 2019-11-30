@@ -4,5 +4,5 @@
 class commands {
 private:
 public:
-void help(std::string, int);
+  void help(std::string, int);
 };
