@@ -1,13 +1,17 @@
 #include <iostream>
 #include <string>
-#include "commands.h"
-#include "strm.h"
-#include "auth.h"
-#include "encrypt.h"
+#include "commands.hpp"
+#include "strm.hpp"
+#include "auth.hpp"
+#include "encrypt.hpp"
 
 void commands::help(std::string cmd, int priv){
         if(priv == 1) {
-                std::cout << "Help Menu\n";
+               if(cmd == "" || cmd == " ") {
+                        std::cout << "Help Menu - Standard User\n";
+                        std::cout << "Available Commands:\n";
+                std::cout << "clear - clears the screen\n";
+               }
         }
         if(priv == 2) {
                 std::cout << "Help Menu 2\n";

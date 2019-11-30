@@ -1,4 +1,4 @@
-#include "encrypt.h"
+#include "encrypt.hpp"
 #include <cryptopp/modes.h>
 #include <cryptopp/filters.h>
 #include <cryptopp/aes.h>

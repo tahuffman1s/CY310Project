@@ -7,7 +7,7 @@
 #include <fstream>
 #include <ios>
 #include <ctime>
-#include "strm.h"
+#include "strm.hpp"
 
 // Default Input function
 

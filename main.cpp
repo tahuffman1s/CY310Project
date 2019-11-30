@@ -3,14 +3,14 @@
 #include <vector>
 #include <signal.h>
 #include <cctype>
-#include "strm.h"
-#include "auth.h"
+#include "strm.hpp"
+#include "auth.hpp"
 #include <queue>
 #include <cryptopp/aes.h>
 #include <cryptopp/osrng.h>
-#include "encrypt.h"
+#include "encrypt.hpp"
 #include <ctime>
-#include "commands.h"
+#include "commands.hpp"
 
 
 
@@ -120,6 +120,9 @@ int main() {
                         }
                         if(i == "clear") {
                                 system("clear");
+                        }
+                        if(i == "ftplock -l") {
+
                         }
                 }
         }

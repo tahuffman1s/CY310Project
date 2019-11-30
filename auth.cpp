@@ -2,9 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <queue>
-#include "auth.h"
-#include "strm.h"
-#include "encrypt.h"
+#include "auth.hpp"
+#include "strm.hpp"
+#include "encrypt.hpp"
 #include <termios.h>
 #include <unistd.h>
 
