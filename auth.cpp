@@ -52,87 +52,95 @@ bool auth::check(std::string in) {
 
 void auth::login(std::vector<std::string> vec, int &priv, std::string &user, bool skip) {
         std::ifstream fin;
-        std::string line, password;
+        std::string line, password, line2;
         std::vector<std::string> temp, empty;
         strm in;
+        bool plaincheck = false;
         auth test;
         std::fstream create;
         int fails = 0;
         encrypt en;
-        en.decryptf("./users/"+ user + "/cred.txt");
         fin.open("./users/"+ user + "/cred.txt");
         if(fin.fail()) {
                 std::cout << "No user named " << user << std::endl;
         }
-
         else {
-                std::getline(fin,line);
-                temp = empty;
-                line = "log " + line;
-                in.flags(line, temp);
-                while(fails < 3) {
-                        if(temp[0] == user) {
-                                if(skip == false) {
-                                        std::cout << "Please enter password: ";
-                                        HideStdinKeystrokes();
-                                        getline(std::cin, password);
-                                        ShowStdinKeystrokes();
-                                        std::cout << '\n';
-                                        if(temp[1] == password) {
+                std::getline(fin,line2);
+                fin.close();
+                if(user != in.frontcut(line2,in.gfsin(line2) - 1)) {
+                        en.decryptf("./users/"+ user + "/cred.txt");
+                        fin.open("./users/"+ user + "/cred.txt");
+                        std::getline(fin,line);
+                        temp = empty;
+                        line = "log " + line;
+                        in.flags(line, temp);
+                        while(fails < 3) {
+                                if(temp[0] == user) {
+                                        if(skip == false) {
+                                                std::cout << "Please enter password: ";
+                                                HideStdinKeystrokes();
+                                                getline(std::cin, password);
+                                                ShowStdinKeystrokes();
+                                                std::cout << '\n';
+                                                if(temp[1] == password) {
+                                                        std::system("clear");
+                                                        std::cout << "Logged in!\n";
+                                                        if(temp[2] == "user") {
+                                                                std::cout << "Welcome " << temp[0] << " you are a user.\n";
+                                                                en.encryptf("./users/"+ user + "/cred.txt");
+                                                                in.wlog(user + " Logged in on", user);
+                                                                priv = 1;
+                                                                break;
+                                                        }
+                                                        else if(temp[2] == "mod") {
+                                                                std::cout << "Welcome " << temp[0] << " you are a mod.\n";
+                                                                en.encryptf("./users/"+ user + "/cred.txt");
+                                                                in.wlog(user + " Logged in on", user);
+                                                                priv = 2;
+                                                                break;
+                                                        }
+                                                        else if(temp[2] == "admin") {
+                                                                std::cout << "Welcome " << temp[0] << " you are an admin.\n";
+                                                                en.encryptf("./users/"+ user + "/cred.txt");
+                                                                in.wlog(user + " Logged in on", user);
+                                                                priv = 3;
+                                                                break;
+                                                        }
+                                                }
+                                                else {
+                                                        fails++;
+                                                        std::cout << "Incorrect Password! Number of attempts remaining: " << 3 - fails << '\n';
+                                                        en.encryptf("./users/"+ user + "/cred.txt");
+                                                }
+                                        }
+                                        else{
                                                 std::system("clear");
                                                 std::cout << "Logged in!\n";
                                                 if(temp[2] == "user") {
                                                         std::cout << "Welcome " << temp[0] << " you are a user.\n";
                                                         en.encryptf("./users/"+ user + "/cred.txt");
-                                                        in.wlog(user + " Logged in on", user);
                                                         priv = 1;
                                                         break;
                                                 }
                                                 else if(temp[2] == "mod") {
                                                         std::cout << "Welcome " << temp[0] << " you are a mod.\n";
                                                         en.encryptf("./users/"+ user + "/cred.txt");
-                                                        in.wlog(user + " Logged in on", user);
                                                         priv = 2;
                                                         break;
                                                 }
                                                 else if(temp[2] == "admin") {
                                                         std::cout << "Welcome " << temp[0] << " you are an admin.\n";
                                                         en.encryptf("./users/"+ user + "/cred.txt");
-                                                        in.wlog(user + " Logged in on", user);
                                                         priv = 3;
                                                         break;
                                                 }
                                         }
-                                        else {
-                                                fails++;
-                                                std::cout << "Incorrect Password! Number of attempts remaining: " << 3 - fails << '\n';
-                                                en.encryptf("./users/"+ user + "/cred.txt");
-                                        }
-                                }
-                                else{
-                                        std::system("clear");
-                                        std::cout << "Logged in!\n";
-                                        if(temp[2] == "user") {
-                                                std::cout << "Welcome " << temp[0] << " you are a user.\n";
-                                                en.encryptf("./users/"+ user + "/cred.txt");
-                                                priv = 1;
-                                                break;
-                                        }
-                                        else if(temp[2] == "mod") {
-                                                std::cout << "Welcome " << temp[0] << " you are a mod.\n";
-                                                en.encryptf("./users/"+ user + "/cred.txt");
-                                                priv = 2;
-                                                break;
-                                        }
-                                        else if(temp[2] == "admin") {
-                                                std::cout << "Welcome " << temp[0] << " you are an admin.\n";
-                                                en.encryptf("./users/"+ user + "/cred.txt");
-                                                priv = 3;
-                                                break;
-                                        }
                                 }
                         }
-
+                }
+                else {
+                        std::cout << "Error with account! Try logging in again!\n";
+                        en.encryptf("./users/" + user + "/cred.txt");
                 }
         }
 }

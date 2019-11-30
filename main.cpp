@@ -19,6 +19,7 @@ void ctrl_cz_block(int signum) {
 }
 
 int main() {
+        system("clear");
         std::string i = "", checker, user = "";
         std::string out, stime;
         int priv = 0;
