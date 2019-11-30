@@ -146,7 +146,6 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user, boo
 }
 
 
-// Will be written later
 void auth::reg(std::vector<std::string> vec, int &priv, std::string &user) {
 
         std::string password, email = vec[1], folderlocation = "./users/" + user + '/', command = "mkdir " + folderlocation;
