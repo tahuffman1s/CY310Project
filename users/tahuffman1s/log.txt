@@ -3,3 +3,6 @@ help Mon Nov 11 15:11:51 2019
 exit Mon Nov 11 15:11:53 2019
 tahuffman1s Logged in on Mon Nov 11 15:12:06 2019
 tahuffman1s Logged in on Mon Nov 11 15:12:19 2019
+tahuffman1s Logged in on Sat Nov 30 15:01:16 2019
+tahuffman1s Logged in on Sat Nov 30 15:08:45 2019
+logout Sat Nov 30 15:08:49 2019

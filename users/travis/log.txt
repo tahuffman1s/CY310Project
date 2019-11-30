@@ -89,3 +89,28 @@ help clear Sat Nov 30 13:58:45 2019
 help rp Sat Nov 30 13:58:47 2019
 help help Sat Nov 30 13:58:55 2019
 clear Sat Nov 30 13:59:01 2019
+travis Logged in on Sat Nov 30 15:00:31 2019
+help Sat Nov 30 15:00:34 2019
+help chr Sat Nov 30 15:00:38 2019
+help ftp Sat Nov 30 15:00:42 2019
+clear Sat Nov 30 15:00:47 2019
+promote tahuffman1s Sat Nov 30 15:00:54 2019
+travis Logged in on Sat Nov 30 15:04:10 2019
+hlep Sat Nov 30 15:04:11 2019
+help Sat Nov 30 15:04:13 2019
+help demote Sat Nov 30 15:04:16 2019
+demote Sat Nov 30 15:04:21 2019
+clear Sat Nov 30 15:04:22 2019
+promote tahuffman1s Sat Nov 30 15:04:31 2019
+travis Logged in on Sat Nov 30 15:05:56 2019
+help Sat Nov 30 15:05:58 2019
+clear Sat Nov 30 15:05:59 2019
+promote tahuffman1s Sat Nov 30 15:06:02 2019
+promote jack Sat Nov 30 15:06:06 2019
+travis Logged in on Sat Nov 30 15:08:06 2019
+demote tahuffman1s Sat Nov 30 15:08:11 2019
+demote tahuffman1s Sat Nov 30 15:08:16 2019
+promote tahuffman1s Sat Nov 30 15:08:24 2019
+logout Sat Nov 30 15:08:35 2019
+travis Logged in on Sat Nov 30 15:08:54 2019
+demote tahuffman1s Sat Nov 30 15:08:58 2019

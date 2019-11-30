@@ -110,12 +110,64 @@ int main() {
         i = input.frontcut(i, input.gfsin(i) - 1);
       }
       if (i == "help") {
-        command.help(arg, priv);
+        void commands::promote(std::string user, int priv) {
+          encrypt en;
+          std::ifstream in;
+          std::ofstream out;
+          std::vector<std::string> vec;
+          strm ln;
+          std::string line, outline;
+          if (priv == 3) {
+            in.open("./users/" + user + "/cred.txt");
+            if (in.fail()) {
+              std::cout << "No user named " << user << std::endl;
+            } else {
+              std::getline(in, line);
+              if (user != ln.frontcut(line, ln.gfsin(line) - 1)) {
+                in.close();
+                en.decryptf("./users/" + user + "/cred.txt");
+                in.open("./users/" + user + "/cred.txt");
+                std::getline(in, line);
+                ln.flags(line, vec);
+                if (vec[1] == "user") {
+                  in.close();
+                  outline = user + " " + vec[0] + " mod " + vec[2];
+                  out.open("./users/" + user + "/cred.txt");
+                  out << outline;
+                  en.encryptf("./users/" + user + "/cred.txt");
+                } else {
+                  std::cout << user << " is already a moderator or above!\n";
+                  in.close();
+                }
+
+              } else {
+                std::cout << "Corrupted User, fixing...\n";
+                en.encryptf("./users/" + user + "/cred.txt");
+              }
+            }
+          }
+        }
       }
       if (i == "clear") {
         system("clear");
       }
-      if (i == "ftplock -l") {
+      if (i == "sftp") {
+        command.sftp(priv);
+      }
+      if (i == "promote") {
+        command.promote(arg, priv);
+      }
+      if (i == "reboot") {
+        system("sudo reboot");
+      }
+      if (i == "shutdown") {
+        system("sudo shutdown -h now");
+      }
+      if (i == "logout") {
+        priv = 0;
+      }
+      if (i == "demote") {
+        command.demote(arg, priv);
       }
       cmdvec.clear();
     }

@@ -2,6 +2,7 @@
 #include "auth.hpp"
 #include "encrypt.hpp"
 #include "strm.hpp"
+#include <fstream>
 #include <iostream>
 #include <string>
 
@@ -18,7 +19,7 @@ void commands::help(std::string cmd, int priv) {
       std::cout << "help [command] - shows this menu, can be used to show more "
                    "details about a specific command.\n";
       std::cout << "rp - request promotion to moderator.\n";
-      std::cout << "logout - logs you out."
+      std::cout << "logout - logs you out.";
     }
   }
   if (priv == 2) {
@@ -39,7 +40,7 @@ void commands::help(std::string cmd, int priv) {
     if (cmd == "clear") {
       std::cout << "clear - clears the screen\n";
     } else if (cmd == "sftp") {
-      std::cout << "sftp - shows ftp credentials\n;"
+      std::cout << "sftp - shows ftp credentials\n";
     } else if (cmd == "promote") {
       std::cout << "promote [user] - promotes a user to a moderator.\n";
     } else if (cmd == "delete") {
@@ -76,4 +77,87 @@ void commands::help(std::string cmd, int priv) {
   }
 }
 
-void commands::ft
+void commands::sftp(int priv) {
+  if (priv >= 2) {
+    std::cout << "FTP Server Address: \n";
+    std::cout << "FTP port: 41020 \n";
+    std::cout << "FTP Username: CY310\n";
+    std::cout << "FTP Password: password\n";
+  }
+}
+
+void commands::promote(std::string user, int priv) {
+  encrypt en;
+  std::ifstream in;
+  std::ofstream out;
+  std::vector<std::string> vec;
+  strm ln;
+  std::string line, outline;
+  if (priv == 3) {
+    in.open("./users/" + user + "/cred.txt");
+    if (in.fail()) {
+      std::cout << "No user named " << user << std::endl;
+    } else {
+      std::getline(in, line);
+      if (user != ln.frontcut(line, ln.gfsin(line) - 1)) {
+        in.close();
+        en.decryptf("./users/" + user + "/cred.txt");
+        in.open("./users/" + user + "/cred.txt");
+        std::getline(in, line);
+        ln.flags(line, vec);
+        if (vec[1] == "user") {
+          in.close();
+          outline = user + " " + vec[0] + " mod " + vec[2];
+          out.open("./users/" + user + "/cred.txt");
+          out << outline;
+          en.encryptf("./users/" + user + "/cred.txt");
+        } else {
+          std::cout << user << " is already a moderator or above!\n";
+          in.close();
+        }
+
+      } else {
+        std::cout << "Corrupted User, fixing...\n";
+        en.encryptf("./users/" + user + "/cred.txt");
+      }
+    }
+  }
+}
+
+void commands::demote(std::string user, int priv) {
+  encrypt en;
+  std::ifstream in;
+  std::ofstream out;
+  std::vector<std::string> vec;
+  strm ln;
+  std::string line, outline;
+  if (priv == 3) {
+    in.open("./users/" + user + "/cred.txt");
+    if (in.fail()) {
+      std::cout << "No user named " << user << std::endl;
+    } else {
+      std::getline(in, line);
+      if (user != ln.frontcut(line, ln.gfsin(line) - 1)) {
+        in.close();
+        en.decryptf("./users/" + user + "/cred.txt");
+        in.open("./users/" + user + "/cred.txt");
+        std::getline(in, line);
+        ln.flags(line, vec);
+        if (vec[1] == "user") {
+          in.close();
+          outline = user + " " + vec[0] + " user " + vec[2];
+          out.open("./users/" + user + "/cred.txt");
+          out << outline;
+          en.encryptf("./users/" + user + "/cred.txt");
+        } else {
+          std::cout << user << " is already a user!\n";
+          in.close();
+        }
+
+      } else {
+        std::cout << "Corrupted User, fixing...\n";
+        en.encryptf("./users/" + user + "/cred.txt");
+      }
+    }
+  }
+}
