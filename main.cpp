@@ -150,7 +150,7 @@ int main() {
         command.deleteuser(arg, priv);
       }
       if (i == "say") {
-        command.say(arg, priv);
+        command.say(input.backcut(i, input.gfsin(i) + 1), priv);
       }
       cmdvec.clear();
     }

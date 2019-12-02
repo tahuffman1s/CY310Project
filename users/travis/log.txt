@@ -92,3 +92,5 @@ say "test" Sun Dec  1 23:19:07 2019
 travis Logged in on Sun Dec  1 23:24:24 2019
 say "test" Sun Dec  1 23:24:30 2019
 logout Sun Dec  1 23:24:39 2019
+travis Logged in on Sun Dec  1 23:36:30 2019
+say test Sun Dec  1 23:36:33 2019
