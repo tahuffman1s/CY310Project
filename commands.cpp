@@ -54,12 +54,15 @@ void commands::help(std::string cmd, int priv) {
     } else if (cmd == "ftp") {
       std::cout << "ftp -on - turns on the ftp server.\n";
       std::cout << "ftp -off - turns off the ftp server.\n";
+      std::cout << "ftp -r - restarts the ftp server.\n";
     } else if (cmd == "shutdown") {
       std::cout << "shutdown - shutsdown the sever.\n";
     } else if (cmd == "reboot") {
       std::cout << "reboot - reboots the server.\n";
     } else if (cmd == "logout") {
       std::cout << "logout - logs you out.\n";
+    } else if (cmd == "say") {
+      std::cout << "say - sends a message to the server\n";
     } else {
       std::cout << "Help Menu - Admin\n";
       std::cout << "Available Commands:\n";
@@ -75,6 +78,7 @@ void commands::help(std::string cmd, int priv) {
       std::cout << "shutdown - shutsdown the sever.\n";
       std::cout << "reboot - reboots the server.\n";
       std::cout << "logout - logs you out.\n";
+      std::cout << "say - sends a message to the server\n";
     }
   }
 }
@@ -174,5 +178,30 @@ void commands::deleteuser(std::string user, int priv) {
   std::string cmd = "rm -r ./users/" + user;
   if (priv == 3) {
     system(cmd.c_str());
+  }
+}
+
+void commands::say(std::string text, int priv) {
+  std::string cmd = "wall " + '"' + text + '"';
+  if (priv == 3) {
+    system(cmd.c_str());
+  }
+}
+
+void commands::ftp(std::string flag, int priv) {
+  if (priv == 3) {
+    if (flag == "-on") {
+      std::cout << "Starting up ftp server.\n";
+      system("sudo service vsftpd start");
+    } else if (flag == "-off") {
+      std::cout << "Shutting down ftp server.\n";
+      system("sudo service vsftpd stop");
+    } else if (flag == "-r") {
+      std::cout << "Restarting ftp server.\n";
+      system("sudo service vsftpd restart");
+    } else {
+      std::cout << "Command ftp has no modifier " << flag << std::endl;
+      std::cout << "Use command help ftp to view available modifiers\n";
+    }
   }
 }

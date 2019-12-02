@@ -46,6 +46,8 @@ int main() {
       std::cout << "Type login [Username] to login\n";
       std::cout << "Type register [Username] [Email] to register\n";
       std::cout << "> ";
+      void rp(int);
+      void chr(int);
       std::getline(std::cin, i);
       fixlen = i.length() - 1;
       if (i[fixlen] == ' ') {
@@ -146,6 +148,9 @@ int main() {
       }
       if (i == "delete") {
         command.deleteuser(arg, priv);
+      }
+      if (i == "say") {
+        command.say(arg, priv);
       }
       cmdvec.clear();
     }
