@@ -98,7 +98,7 @@ void commands::promote(std::string user, int priv) {
   std::ofstream out;
   std::vector<std::string> vec;
   strm ln;
-  std::string line, outline, file;
+  std::string line, outline, file, cmd;
   file = "./users/" + user + "/cred.txt";
   if (priv == 3) {
     in.open(file);
@@ -115,7 +115,8 @@ void commands::promote(std::string user, int priv) {
         if (vec[1] == "user") {
           in.close();
           outline = user + " " + vec[0] + " mod " + vec[2];
-          system("touch ./users/" + user + "/verified.txt");
+          cmd = "touch ./users/" + user + "/verified.txt";
+          system(cmd.c_str());
           out.open(file);
           out << outline;
           out.close();
@@ -162,7 +163,7 @@ void commands::demote(std::string user, int priv) {
           out.close();
           en.encryptf(file);
           cmd = "sudo userdel " + user;
-          system(cmd.c_str);
+          system(cmd.c_str());
         } else {
           std::cout << user << " is already a unverified user!\n";
           en.encryptf(file);
@@ -183,7 +184,7 @@ void commands::deleteuser(std::string user, int priv) {
     system(cmd.c_str());
     if (user != "cy310") {
       cmd = "sudo userdel " + user;
-      system(cmd.c_str);
+      system(cmd.c_str());
     } else {
       std::cout << "Cannot delete main account!\n";
     }

@@ -99,7 +99,7 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user,
                   command = "sudo echo " + user + ':' + password + " | " +
                             "sudo chpasswd";
                   system(command.c_str());
-                  command = "sudo rm ./users/" + user + "/verified.txt");
+                  command = "sudo rm ./users/" + user + "/verified.txt";
                 }
                 std::cout << "Welcome " << temp[0]
                           << " you are a verified user.\n";
