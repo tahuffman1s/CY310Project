@@ -48,9 +48,6 @@ void commands::help(std::string cmd, int priv) {
                    "user.\n";
     } else if (cmd == "delete") {
       std::cout << "delete [user] - deletes a user.\n";
-    } else if (cmd == "demote") {
-      std::cout
-          << "demote [user] - demotes a moderator down to standard user.\n";
     } else if (cmd == "ftp") {
       std::cout << "ftp -on - turns on the ftp server.\n";
       std::cout << "ftp -off - turns off the ftp server.\n";
@@ -71,8 +68,6 @@ void commands::help(std::string cmd, int priv) {
                    "details about a specific command.\n";
       std::cout << "sftp - shows ftp credentials.\n";
       std::cout << "promote [user] - promotes a user to a moderator\n";
-      std::cout
-          << "demote [user] - demotes a moderator down to standard user.\n";
       std::cout << "delete [user] - deletes a user.\n";
       std::cout << "ftp [command] - turns on or off the ftp server.\n";
       std::cout << "shutdown - shutsdown the sever.\n";
@@ -143,7 +138,7 @@ void commands::demote(std::string user, int priv) {
   strm ln;
   std::string line, outline, file, cmd;
   file = "./users/" + user + "/cred.txt";
-  if (priv == 3) {
+  if (priv == 4) {
     in.open(file);
     if (in.fail()) {
       std::cout << "No user named " << user << std::endl;
