@@ -62,7 +62,7 @@ void commands::help(std::string cmd, int priv) {
     } else if (cmd == "logout") {
       std::cout << "logout - logs you out.\n";
     } else if (cmd == "say") {
-      std::cout << "say - sends a message to the server\n";
+      std::cout << "say - sends a message to the server use quotes\n";
     } else {
       std::cout << "Help Menu - Admin\n";
       std::cout << "Available Commands:\n";
@@ -78,7 +78,7 @@ void commands::help(std::string cmd, int priv) {
       std::cout << "shutdown - shutsdown the sever.\n";
       std::cout << "reboot - reboots the server.\n";
       std::cout << "logout - logs you out.\n";
-      std::cout << "say - sends a message to the server\n";
+      std::cout << "say - sends a message to the server use quotes\n";
     }
   }
 }
@@ -182,7 +182,7 @@ void commands::deleteuser(std::string user, int priv) {
 }
 
 void commands::say(std::string text, int priv) {
-  std::string cmd = "wall " + '"' + text + '"';
+  std::string cmd = "wall " + text;
   if (priv == 3) {
     system(cmd.c_str());
   }
