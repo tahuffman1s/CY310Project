@@ -12,6 +12,8 @@ void commands::help(std::string cmd, int priv) {
       std::cout << "clear - clears the screen\n";
     } else if (cmd == "rp") {
       std::cout << "rp - request promotion to moderator\n";
+    } else if (cmd == "logout") {
+      std::cout << "logout - logs you out.\n";
     } else {
       std::cout << "Help Menu - Standard User\n";
       std::cout << "Available Commands:\n";
@@ -19,7 +21,7 @@ void commands::help(std::string cmd, int priv) {
       std::cout << "help [command] - shows this menu, can be used to show more "
                    "details about a specific command.\n";
       std::cout << "rp - request promotion to moderator.\n";
-      std::cout << "logout - logs you out.";
+      std::cout << "logout - logs you out.\n";
     }
   }
   if (priv == 2) {
@@ -27,13 +29,16 @@ void commands::help(std::string cmd, int priv) {
       std::cout << "clear - clears the screen\n";
     } else if (cmd == "sftp") {
       std::cout << "sftp - shows ftp credentials\n";
+    } else if (cmd == "logout") {
+      std::cout << "logout - logs you out.\n";
     } else {
-      std::cout << "Help Menu - Standard User\n";
+      std::cout << "Help Menu - Moderator\n";
       std::cout << "Available Commands:\n";
       std::cout << "clear - clears the screen\n";
       std::cout << "help [command] - shows this menu, can be used to show more "
                    "details about a specific command.\n";
       std::cout << "sftp - shows ftp credentials.\n";
+      std::cout << "logout - logs you out.\n";
     }
   }
   if (priv == 3) {
@@ -57,13 +62,14 @@ void commands::help(std::string cmd, int priv) {
       std::cout << "shutdown - shutsdown the sever.\n";
     } else if (cmd == "reboot") {
       std::cout << "reboot - reboots the server.\n";
+    } else if (cmd == "logout") {
+      std::cout << "logout - logs you out.\n";
     } else {
-      std::cout << "Help Menu - Standard User\n";
+      std::cout << "Help Menu - Admin\n";
       std::cout << "Available Commands:\n";
       std::cout << "clear - clears the screen\n";
       std::cout << "help [command] - shows this menu, can be used to show more "
                    "details about a specific command.\n";
-      std::cout << "rp - request promotion to moderator\n";
       std::cout << "sftp - shows ftp credentials.\n";
       std::cout << "promote [user] - promotes a user to a moderator\n";
       std::cout
@@ -73,6 +79,7 @@ void commands::help(std::string cmd, int priv) {
       std::cout << "ftp [command] - turns on or off the ftp server.\n";
       std::cout << "shutdown - shutsdown the sever.\n";
       std::cout << "reboot - reboots the server.\n";
+      std::cout << "logout - logs you out.\n";
     }
   }
 }
@@ -92,33 +99,36 @@ void commands::promote(std::string user, int priv) {
   std::ofstream out;
   std::vector<std::string> vec;
   strm ln;
-  std::string line, outline;
+  std::string line, outline, file;
+  file = "./users/" + user + "/cred.txt";
   if (priv == 3) {
-    in.open("./users/" + user + "/cred.txt");
+    in.open(file);
     if (in.fail()) {
       std::cout << "No user named " << user << std::endl;
     } else {
       std::getline(in, line);
       if (user != ln.frontcut(line, ln.gfsin(line) - 1)) {
         in.close();
-        en.decryptf("./users/" + user + "/cred.txt");
-        in.open("./users/" + user + "/cred.txt");
+        en.decryptf(file);
+        in.open(file);
         std::getline(in, line);
         ln.flags(line, vec);
         if (vec[1] == "user") {
           in.close();
           outline = user + " " + vec[0] + " mod " + vec[2];
-          out.open("./users/" + user + "/cred.txt");
+          out.open(file);
           out << outline;
-          en.encryptf("./users/" + user + "/cred.txt");
+          out.close();
+          en.encryptf(file);
         } else {
           std::cout << user << " is already a moderator or above!\n";
+          en.encryptf(file);
           in.close();
         }
 
       } else {
         std::cout << "Corrupted User, fixing...\n";
-        en.encryptf("./users/" + user + "/cred.txt");
+        en.encryptf(file);
       }
     }
   }
@@ -130,34 +140,41 @@ void commands::demote(std::string user, int priv) {
   std::ofstream out;
   std::vector<std::string> vec;
   strm ln;
-  std::string line, outline;
+  std::string line, outline, file;
+  file = "./users/" + user + "/cred.txt";
   if (priv == 3) {
-    in.open("./users/" + user + "/cred.txt");
+    in.open(file);
     if (in.fail()) {
       std::cout << "No user named " << user << std::endl;
     } else {
       std::getline(in, line);
       if (user != ln.frontcut(line, ln.gfsin(line) - 1)) {
         in.close();
-        en.decryptf("./users/" + user + "/cred.txt");
-        in.open("./users/" + user + "/cred.txt");
+        en.decryptf(file);
+        in.open(file);
         std::getline(in, line);
         ln.flags(line, vec);
-        if (vec[1] == "user") {
+        if (vec[1] == "mod") {
           in.close();
           outline = user + " " + vec[0] + " user " + vec[2];
-          out.open("./users/" + user + "/cred.txt");
+          out.open(file);
           out << outline;
-          en.encryptf("./users/" + user + "/cred.txt");
+          out.close();
+          en.encryptf(file);
         } else {
           std::cout << user << " is already a user!\n";
+          en.encryptf(file);
           in.close();
         }
 
       } else {
         std::cout << "Corrupted User, fixing...\n";
-        en.encryptf("./users/" + user + "/cred.txt");
+        en.encryptf(file);
       }
     }
   }
+}
+
+void commands::rp(int) {
+  
 }

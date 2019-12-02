@@ -110,44 +110,9 @@ int main() {
         i = input.frontcut(i, input.gfsin(i) - 1);
       }
       if (i == "help") {
-        void commands::promote(std::string user, int priv) {
-          encrypt en;
-          std::ifstream in;
-          std::ofstream out;
-          std::vector<std::string> vec;
-          strm ln;
-          std::string line, outline;
-          if (priv == 3) {
-            in.open("./users/" + user + "/cred.txt");
-            if (in.fail()) {
-              std::cout << "No user named " << user << std::endl;
-            } else {
-              std::getline(in, line);
-              if (user != ln.frontcut(line, ln.gfsin(line) - 1)) {
-                in.close();
-                en.decryptf("./users/" + user + "/cred.txt");
-                in.open("./users/" + user + "/cred.txt");
-                std::getline(in, line);
-                ln.flags(line, vec);
-                if (vec[1] == "user") {
-                  in.close();
-                  outline = user + " " + vec[0] + " mod " + vec[2];
-                  out.open("./users/" + user + "/cred.txt");
-                  out << outline;
-                  en.encryptf("./users/" + user + "/cred.txt");
-                } else {
-                  std::cout << user << " is already a moderator or above!\n";
-                  in.close();
-                }
-
-              } else {
-                std::cout << "Corrupted User, fixing...\n";
-                en.encryptf("./users/" + user + "/cred.txt");
-              }
-            }
-          }
-        }
+        command.help(arg, priv);
       }
+
       if (i == "clear") {
         system("clear");
       }
@@ -165,6 +130,16 @@ int main() {
       }
       if (i == "logout") {
         priv = 0;
+        system("clear");
+        std::cout << "*********************************\n";
+        std::cout << "|  FTP Managment Server         |\n";
+        std::cout << "|  By: Travis                   |\n";
+        std::cout << "|      Sam                      |\n";
+        std::cout << "|      Victoria                 |\n";
+        std::cout << "|      Jacob                    |\n";
+        std::cout << "|      Chase                    |\n";
+        std::cout << "*********************************\n";
+        first = true;
       }
       if (i == "demote") {
         command.demote(arg, priv);
