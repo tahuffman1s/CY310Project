@@ -16,7 +16,7 @@ void ctrl_cz_block(int signum) {}
 
 int main() {
   system("clear");
-  std::string i = "", checker, user = "";
+  std::string i = "", checker, user = "", stuff;
   std::string out, stime, arg;
   int priv = 0;
   bool first = true, email = false;
@@ -49,6 +49,7 @@ int main() {
       void rp(int);
       void chr(int);
       std::getline(std::cin, i);
+      stuff = i;
       fixlen = i.length() - 1;
       if (i[fixlen] == ' ') {
         fix = i;
@@ -103,6 +104,7 @@ int main() {
       first = false;
       std::cout << "> ";
       std::getline(std::cin, i);
+      stuff = i;
       input.wlog(i, user);
       std::transform(i.begin(), i.end(), i.begin(), ::tolower);
       cmdvec.clear();
@@ -150,7 +152,7 @@ int main() {
         command.deleteuser(arg, priv);
       }
       if (i == "say") {
-        command.say(input.backcut(i, input.gfsin(i) + 1), priv);
+        command.say(input.backcut(stuff, input.gfsin(stuff) + 1), priv);
       }
       cmdvec.clear();
     }
