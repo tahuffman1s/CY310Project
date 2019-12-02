@@ -100,6 +100,9 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user,
                             "sudo chpasswd";
                   system(command.c_str());
                   command = "sudo rm ./users/" + user + "/verified.txt";
+                  system(command.c_str());
+                  command = "sudo usermod -a -G standardusers " + user;
+                  system(command.c_str());
                 }
                 std::cout << "Welcome " << temp[0]
                           << " you are a verified user.\n";
