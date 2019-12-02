@@ -154,6 +154,9 @@ int main() {
       if (i == "say") {
         command.say(input.backcut(stuff, input.gfsin(stuff) + 1), priv);
       }
+      if (i == "ftp") {
+        command.ftp(arg, priv);
+      }
       cmdvec.clear();
     }
   }
