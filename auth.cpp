@@ -85,13 +85,15 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user,
               std::system("clear");
               std::cout << "Logged in!\n";
               if (temp[2] == "user") {
-                std::cout << "Welcome " << temp[0] << " you are a user.\n";
+                std::cout << "Welcome " << temp[0]
+                          << " you are an unverified user.\n";
                 en.encryptf("./users/" + user + "/cred.txt");
                 in.wlog(user + " Logged in on", user);
                 priv = 1;
                 break;
               } else if (temp[2] == "mod") {
-                std::cout << "Welcome " << temp[0] << " you are a mod.\n";
+                std::cout << "Welcome " << temp[0]
+                          << " you are a verified user.\n";
                 en.encryptf("./users/" + user + "/cred.txt");
                 in.wlog(user + " Logged in on", user);
                 priv = 2;
@@ -113,12 +115,14 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user,
             std::system("clear");
             std::cout << "Logged in!\n";
             if (temp[2] == "user") {
-              std::cout << "Welcome " << temp[0] << " you are a user.\n";
+              std::cout << "Welcome " << temp[0]
+                        << " you are an unverified user.\n";
               en.encryptf("./users/" + user + "/cred.txt");
               priv = 1;
               break;
             } else if (temp[2] == "mod") {
-              std::cout << "Welcome " << temp[0] << " you are a mod.\n";
+              std::cout << "Welcome " << temp[0]
+                        << " you are a verified user.\n";
               en.encryptf("./users/" + user + "/cred.txt");
               priv = 2;
               break;
@@ -140,25 +144,34 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user,
 
 void auth::reg(std::vector<std::string> vec, int &priv, std::string &user) {
 
-  std::string password, email = vec[1],
-                        folderlocation = "./users/" + user + '/',
-                        command = "mkdir " + folderlocation;
+  std::string password, conf, email = vec[1],
+                              folderlocation = "./users/" + user + '/',
+                              command = "mkdir " + folderlocation;
+  std::ifstream input;
+  auth reg;
+  std::fstream output;
   std::cout << "Please enter a password: ";
   HideStdinKeystrokes();
   getline(std::cin, password);
-  ShowStdinKeystrokes();
   std::cout << '\n';
-  std::ifstream input;
-  std::fstream output;
-  input.open(folderlocation + "cred.txt");
-  encrypt en;
-  if (input.fail()) {
-    system(command.c_str());
-    output.open(folderlocation + "cred.txt", std::fstream::out);
-    output << user << " " << password << " user " << email;
-    output.close();
-    en.encryptf(folderlocation + "cred.txt");
-  } else if (!input.fail()) {
-    std::cout << "User already exists!\n";
+  std::cout << "Please confirm password: ";
+  getline(std::cin, conf);
+  std::cout << '\n';
+  ShowStdinKeystrokes();
+  if (password == conf) {
+    input.open(folderlocation + "cred.txt");
+    encrypt en;
+    if (input.fail()) {
+      system(command.c_str());
+      output.open(folderlocation + "cred.txt", std::fstream::out);
+      output << user << " " << password << " user " << email;
+      output.close();
+      en.encryptf(folderlocation + "cred.txt");
+      reg.login(vec, priv, user, true);
+    } else if (!input.fail()) {
+      std::cout << "User already exists!\n";
+    }
+  } else {
+    std::cout << "Password doesn't match please try again!\n";
   }
 }

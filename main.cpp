@@ -83,7 +83,7 @@ int main() {
           if (email == true) {
             user = cmdvec[0];
             reg.reg(cmdvec, priv, user);
-            reg.login(cmdvec, priv, user, true);
+
           } else {
             std::cout << "Not a valid email!\n";
           }
@@ -143,6 +143,9 @@ int main() {
       }
       if (i == "demote") {
         command.demote(arg, priv);
+      }
+      if (i == "delete") {
+        command.deleteuser(arg, priv);
       }
       cmdvec.clear();
     }

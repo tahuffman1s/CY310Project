@@ -9,6 +9,5 @@ public:
   void sftp(int);
   void promote(std::string, int);
   void demote(std::string, int);
-  void rp(int);
-  void chr(int);
+  void deleteuser(std::string, int);
 };

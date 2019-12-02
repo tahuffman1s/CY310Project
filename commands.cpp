@@ -10,17 +10,14 @@ void commands::help(std::string cmd, int priv) {
   if (priv == 1) {
     if (cmd == "clear") {
       std::cout << "clear - clears the screen\n";
-    } else if (cmd == "rp") {
-      std::cout << "rp - request promotion to moderator\n";
     } else if (cmd == "logout") {
       std::cout << "logout - logs you out.\n";
     } else {
-      std::cout << "Help Menu - Standard User\n";
+      std::cout << "Help Menu - Unverified User\n";
       std::cout << "Available Commands:\n";
       std::cout << "clear - clears the screen\n";
       std::cout << "help [command] - shows this menu, can be used to show more "
                    "details about a specific command.\n";
-      std::cout << "rp - request promotion to moderator.\n";
       std::cout << "logout - logs you out.\n";
     }
   }
@@ -47,11 +44,10 @@ void commands::help(std::string cmd, int priv) {
     } else if (cmd == "sftp") {
       std::cout << "sftp - shows ftp credentials\n";
     } else if (cmd == "promote") {
-      std::cout << "promote [user] - promotes a user to a moderator.\n";
+      std::cout << "promote [user] - promotes an unverified user to a verified "
+                   "user.\n";
     } else if (cmd == "delete") {
       std::cout << "delete [user] - deletes a user.\n";
-    } else if (cmd == "chr") {
-      std::cout << "chr - checks requests for moderator promotions.\n";
     } else if (cmd == "demote") {
       std::cout
           << "demote [user] - demotes a moderator down to standard user.\n";
@@ -75,7 +71,6 @@ void commands::help(std::string cmd, int priv) {
       std::cout
           << "demote [user] - demotes a moderator down to standard user.\n";
       std::cout << "delete [user] - deletes a user.\n";
-      std::cout << "chr - checks requests for moderator promotions.\n";
       std::cout << "ftp [command] - turns on or off the ftp server.\n";
       std::cout << "shutdown - shutsdown the sever.\n";
       std::cout << "reboot - reboots the server.\n";
@@ -121,7 +116,7 @@ void commands::promote(std::string user, int priv) {
           out.close();
           en.encryptf(file);
         } else {
-          std::cout << user << " is already a moderator or above!\n";
+          std::cout << user << " is already a verfied user or admin!\n";
           en.encryptf(file);
           in.close();
         }
@@ -162,7 +157,7 @@ void commands::demote(std::string user, int priv) {
           out.close();
           en.encryptf(file);
         } else {
-          std::cout << user << " is already a user!\n";
+          std::cout << user << " is already a unverified user!\n";
           en.encryptf(file);
           in.close();
         }
@@ -175,6 +170,9 @@ void commands::demote(std::string user, int priv) {
   }
 }
 
-void commands::rp(int) {
-  
+void commands::deleteuser(std::string user, int priv) {
+  std::string cmd = "rm -r ./users/" + user;
+  if (priv == 3) {
+    system(cmd.c_str());
+  }
 }
