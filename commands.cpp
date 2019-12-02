@@ -86,9 +86,9 @@ void commands::help(std::string cmd, int priv) {
 void commands::sftp(int priv) {
   if (priv >= 2) {
     std::cout << "FTP Server Address: \n";
-    std::cout << "FTP port: 41020 \n";
-    std::cout << "FTP Username: CY310\n";
-    std::cout << "FTP Password: password\n";
+    std::cout << "FTP port: 21\n";
+    std::cout
+        << "You can connect using your account's username and password.\n";
   }
 }
 
@@ -115,6 +115,7 @@ void commands::promote(std::string user, int priv) {
         if (vec[1] == "user") {
           in.close();
           outline = user + " " + vec[0] + " mod " + vec[2];
+          system("touch ./users/" + user + "/verified.txt");
           out.open(file);
           out << outline;
           out.close();
@@ -139,7 +140,7 @@ void commands::demote(std::string user, int priv) {
   std::ofstream out;
   std::vector<std::string> vec;
   strm ln;
-  std::string line, outline, file;
+  std::string line, outline, file, cmd;
   file = "./users/" + user + "/cred.txt";
   if (priv == 3) {
     in.open(file);
@@ -160,6 +161,8 @@ void commands::demote(std::string user, int priv) {
           out << outline;
           out.close();
           en.encryptf(file);
+          cmd = "sudo userdel " + user;
+          system(cmd.c_str);
         } else {
           std::cout << user << " is already a unverified user!\n";
           en.encryptf(file);
@@ -178,6 +181,12 @@ void commands::deleteuser(std::string user, int priv) {
   std::string cmd = "rm -r ./users/" + user;
   if (priv == 3) {
     system(cmd.c_str());
+    if (user != "cy310") {
+      cmd = "sudo userdel " + user;
+      system(cmd.c_str);
+    } else {
+      std::cout << "Cannot delete main account!\n";
+    }
   }
 }
 

@@ -51,8 +51,8 @@ bool auth::check(std::string in) {
 
 void auth::login(std::vector<std::string> vec, int &priv, std::string &user,
                  bool skip) {
-  std::ifstream fin;
-  std::string line, password, line2;
+  std::ifstream fin, checker;
+  std::string line, password, line2, command;
   std::vector<std::string> temp, empty;
   strm in;
   bool plaincheck = false;
@@ -92,6 +92,15 @@ void auth::login(std::vector<std::string> vec, int &priv, std::string &user,
                 priv = 1;
                 break;
               } else if (temp[2] == "mod") {
+                checker.open("./users/" + user + "/verified.txt");
+                if (!checker.fail()) {
+                  command = "sudo useradd -m " + user;
+                  system(command.c_str());
+                  command = "sudo echo " + user + ':' + password + " | " +
+                            "sudo chpasswd";
+                  system(command.c_str());
+                  command = "sudo rm ./users/" + user + "/verified.txt");
+                }
                 std::cout << "Welcome " << temp[0]
                           << " you are a verified user.\n";
                 en.encryptf("./users/" + user + "/cred.txt");
@@ -166,6 +175,7 @@ void auth::reg(std::vector<std::string> vec, int &priv, std::string &user) {
       output.open(folderlocation + "cred.txt", std::fstream::out);
       output << user << " " << password << " user " << email;
       output.close();
+
       en.encryptf(folderlocation + "cred.txt");
       reg.login(vec, priv, user, true);
     } else if (!input.fail()) {
