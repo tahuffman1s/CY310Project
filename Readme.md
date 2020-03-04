@@ -1,4 +1,4 @@
-<h1>CY310 Project</h1>
+<h1>SSH User Server</h1>
 
 Code written by: Travis Huffman, and Jacob Cox <br />
 Check todo.txt for the todo list and to figure out what's done. <br />
